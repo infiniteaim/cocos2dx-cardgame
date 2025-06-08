@@ -115,7 +115,7 @@ void GameController::onCardClicked(CardModel* card) {
         handleNormalCard(card);
     }
 }
-
+```
 
 ## 6. 测试新卡牌
 完成上述步骤后，重新编译并运行游戏，验证新卡牌是否正常显示和工作。
