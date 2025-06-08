@@ -1,0 +1,4 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2116,5): warning : The referenced project '..\cocos2d\external\Box2D\proj.win32\libbox2d.vcxproj' does not exist.
+  card_game.vcxproj -> D:\Edge down load\CocoxProject\card_game\proj.win32\Debug.win32\card_game.exe
+  正在执行自定义生成步骤
+  复制了 0 个文件
