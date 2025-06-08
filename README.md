@@ -55,7 +55,7 @@
 ```json
 {
   "Playfield": [
-    {  "CardFace": "", "CardSuit": "Joker", "x": 100, "y": 200 },
+    {  "CardFace": "...", "CardSuit": "Joker", "x": 100, "y": 200 },
   ]
 }
 ```
