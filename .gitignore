@@ -1,0 +1,6 @@
+# Visual Studio 
+.vs
+/proj.win32/.vs/
+*.suo                
+*.user               
+*.userprefs          
