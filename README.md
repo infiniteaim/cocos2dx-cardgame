@@ -57,7 +57,6 @@
   "cards": [
     { "id": 1, "face": "A", "suit": "heart", "x": 100, "y": 200 },
     { "id": 2, "face": "2", "suit": "heart", "x": 150, "y": 200 },
-    // 添加新的纸牌类型
     { "id": 3, "face": "Joker", "suit": "special", "x": 200, "y": 200 },
     { "id": 4, "face": "King", "suit": "diamond", "x": 250, "y": 200 }
   ]
