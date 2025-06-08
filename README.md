@@ -49,7 +49,7 @@
 
 要在项目中添加更多的纸牌类型，你需要按照以下步骤进行修改：
 
-## 1. 扩展卡牌配置文件
+#### 1. 扩展卡牌配置文件
 首先在 `Resources/level_1.json` 等配置文件中添加新的卡牌定义。例如：
 ```json
 {
@@ -63,7 +63,7 @@
 }
 ```
 
-## 2. 修改卡牌模型类
+#### 2. 修改卡牌模型类
 在 `Classes/models/CardModel.h` 中扩展卡牌属性：
 ```cpp
 enum CardSuitType {
@@ -82,7 +82,7 @@ public:
 };
 ```
 
-## 3. 更新卡牌视图渲染
+#### 3. 更新卡牌视图渲染
 在 `Classes/configs/models/CardResConfig.h` 中根据新的卡牌类型加载不同路径的纹理：
 ```cpp
 static std::string getSuitRes(CardSuitType suit) {
@@ -97,12 +97,12 @@ static std::string getSuitRes(CardSuitType suit) {
     }
 ```
 
-## 4. 添加新的卡牌纹理资源
+#### 4. 添加新的卡牌纹理资源
 确保在 `Resources/cards/` 目录下添加新卡牌类型对应的图片资源，例如：
 - `Joker.png`
 
 
-## 5. 处理特殊卡牌逻辑
+#### 5. 处理特殊卡牌逻辑
 如果新卡牌有特殊行为，需要在控制器或管理器中添加相应逻辑：
 ```cpp
 // 在 GameController.cpp 中
@@ -117,5 +117,5 @@ void GameController::onCardClicked(CardModel* card) {
 }
 ```
 
-## 6. 测试新卡牌
+#### 6. 测试新卡牌
 完成上述步骤后，重新编译并运行游戏，验证新卡牌是否正常显示和工作。
