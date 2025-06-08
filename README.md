@@ -34,7 +34,7 @@
 游戏使用 JSON 文件进行关卡配置。例如，`Resources/level_1.json` 定义了游戏中纸牌的初始状态，包括面值、花色和位置。
 
 ## 运行方法
-1. **构建项目**
+1. **构建项目**：先使用cocos命令创建项目，再将其中的对应部分替换为本仓库的内容。
 2. **运行可执行文件**：
    - **Windows 系统**：在 `proj.win32/Debug.win32` 目录下找到生成的可执行文件并运行。
    - **其他平台**：按照相应的步骤运行构建好的应用程序。
@@ -44,3 +44,78 @@
 - **纸牌交互**：支持纸牌的触摸事件，包括点击和拖动交互。
 - **撤销功能**：允许玩家撤销操作，通过 `UndoManager` 和 `UndoModel` 实现。
 - **MVC 架构**：遵循 MVC 模式，提高代码的组织性和可维护性。
+
+### 项目扩展
+
+要在项目中添加更多的纸牌类型，你需要按照以下步骤进行修改：
+
+## 1. 扩展卡牌配置文件
+首先在 `Resources/level_1.json` 等配置文件中添加新的卡牌定义。例如：
+```json
+{
+  "cards": [
+    { "id": 1, "face": "A", "suit": "heart", "x": 100, "y": 200 },
+    { "id": 2, "face": "2", "suit": "heart", "x": 150, "y": 200 },
+    // 添加新的纸牌类型
+    { "id": 3, "face": "Joker", "suit": "special", "x": 200, "y": 200 },
+    { "id": 4, "face": "King", "suit": "diamond", "x": 250, "y": 200 }
+  ]
+}
+```
+
+## 2. 修改卡牌模型类
+在 `Classes/models/CardModel.h` 中扩展卡牌属性：
+```cpp
+enum CardSuitType {
+        CST_HEARTS, CST_DIAMONDS, CST_CLUBS, CST_SPADES, CST_JOKERS // 添加 CST_JOKERS 类型
+    };
+class CardModel {
+public:
+    // 添加新的初始化方法或修改现有方法
+    CardModel(CardFaceType face, CardSuitType suit, const cocos2d::Vec2& position, int id, CardZone zone): 
+        _face(face)
+        , _suit(suit)
+        , _position(position)
+        , _id(id)
+        , _zone(zone){}
+    ...
+};
+```
+
+## 3. 更新卡牌视图渲染
+在 `Classes/configs/models/CardResConfig.h` 中根据新的卡牌类型加载不同路径的纹理：
+```cpp
+static std::string getSuitRes(CardSuitType suit) {
+        switch (suit) {
+        case CardSuitType::CST_CLUBS:    return "res/suits/club.png";
+        case CardSuitType::CST_DIAMONDS: return "res/suits/diamond.png";
+        case CardSuitType::CST_HEARTS:   return "res/suits/heart.png";
+        case CardSuitType::CST_SPADES:   return "res/suits/spade.png";
+        case CardSuitType::CST_JOKERS:   return "...";
+        default: return "";
+        }
+    }
+```
+
+## 4. 添加新的卡牌纹理资源
+确保在 `Resources/cards/` 目录下添加新卡牌类型对应的图片资源，例如：
+- `Joker.png`
+
+
+## 5. 处理特殊卡牌逻辑
+如果新卡牌有特殊行为，需要在控制器或管理器中添加相应逻辑：
+```cpp
+// 在 GameController.cpp 中
+void GameController::onCardClicked(CardModel* card) {
+    if (card->getSuit() == CardSuitType::CST_JOKERS) {
+        // 处理 Joker 卡牌的特殊逻辑
+        handleJokerCard(card);
+    } else {
+        // 常规卡牌逻辑
+        handleNormalCard(card);
+    }
+}
+
+
+## 6. 测试新卡牌
+完成上述步骤后，重新编译并运行游戏，验证新卡牌是否正常显示和工作。
