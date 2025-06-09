@@ -48,7 +48,7 @@
 
 ## 项目扩展
 
-要在项目中添加更多的纸牌类型，你需要按照以下步骤进行修改：
+### 添加卡牌类型
 
 #### 1. 扩展卡牌配置文件
 首先在 `Resources/level_1.json` 等配置文件中添加新的卡牌定义。例如：
@@ -116,3 +116,41 @@ void GameController::onCardClicked(CardModel* card) {
 
 #### 6. 测试新卡牌
 完成上述步骤后，重新编译并运行游戏，验证新卡牌是否正常显示和工作。
+
+### 添加新的Undo操作
+以添加一个仅回退stack区域的卡牌操作为例
+
+#### 1. 为UndoModel添加新的接口，使其能返回最顶端的stack区域卡牌：
+```cpp
+    bool UndoModel::undoStack(UndoCardState& outState) {
+        if (_history.empty()) {
+            return false; 
+        }
+        for(int i = _history.size() - 1; i >= 0 ; i++){
+            if(_history[i].zone == CardZone::Stack){
+                outState = _history[i];
+                _history.erase(_history.begin() + i);
+                return true;
+            }
+        }
+        return false;
+    }
+```
+
+#### 2. 为UndoManager添加对应的方法
+```cpp
+    bood undoStack(UndoCardState& outState){
+        return _undoModel.undoStack(outState);
+    }
+```
+
+### 3. 在GameController中添加对应的逻辑
+```cpp
+    bool GameController::undoStack() {
+        ......
+    }
+```
+
+### 4. 在GameView中添加新的label并绑定点击事件，同时设置回调函数
+
+### 5. 进行测试
